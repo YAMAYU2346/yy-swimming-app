@@ -9,10 +9,25 @@ services:
         - DB_LANG=ja_JP
     volumes:
       - pgsqldb:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_USER: test
       POSTGRES_PASSWORD: example
+  pgadmin4:
+    image: dpage/pgadmin4
+    ports:
+        - 8888:80
+    volumes:
+        - pgadmindata:/var/lib/pgadmin
+    environment:
+        PGADMIN_DEFAULT_EMAIL: test@gmail.com
+        PGADMIN_DEFAULT_PASSWORD: password
+    depends_on:
+      - db
 
 volumes:
   pgsqldb:
+    driver: local
+  pgadmindata:
     driver: local
