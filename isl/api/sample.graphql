@@ -1,0 +1,16 @@
+mutation {
+  createEvents(
+    events: [
+      {
+        matchId: 1
+        number: 1
+        distance: "100m"
+        style: "平泳ぎ"
+        class1: "A"
+        athletes: [{ lane: 1, name: "山田太郎", team: "TeamA" }]
+      }
+    ]
+  ) {
+    ok
+  }
+}

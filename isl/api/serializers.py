@@ -1,8 +1,14 @@
 #  APIの出力をJSON,XMLデータに変換
 from rest_framework import serializers
-from .models import SampleModel
+from .models import Match
 
-class SampleSerializer(serializers.ModelSerializer):
+
+class MatchSerializer(serializers.ModelSerializer):
     class Meta:
-        model = SampleModel                     # 呼び出すモデル
-        fields = ["id","title", "description"]  # API上に表示するモデルのデータ項目
+        model = Match                     # 呼び出すモデル
+        fields = ["id", "name", "team_num",
+                  "entry_url", "date"]  # API上に表示するモデルのデータ項目
+
+    def create(self, validated_data):
+        print(validated_data)
+        return Match(**validated_data)

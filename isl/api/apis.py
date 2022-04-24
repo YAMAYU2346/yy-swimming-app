@@ -1,14 +1,14 @@
-from .models import SampleModel                          # モデル呼出
+from fcntl import DN_DELETE
+from .models import Match                       # モデル呼出
 from rest_framework.generics import ListCreateAPIView    # API
-from .serializers import SampleSerializer                # APIで渡すデータをJSON,XML変換
+from .serializers import MatchSerializer                # APIで渡すデータをJSON,XML変換
 
 class api(ListCreateAPIView):
-    print('testtesttest')
     # 対象とするモデルのオブジェクトを定義
-    queryset = SampleModel.objects.all()
+    queryset = Match.objects.all()
 
     # APIがデータを返すためのデータ変換ロジックを定義
-    serializer_class = SampleSerializer
+    serializer_class = MatchSerializer
 
     # 認証
     permission_classes = []

@@ -10,7 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import django
+from django.utils.encoding import force_str
+django.utils.encoding.force_text = force_str
+
 from pathlib import Path
+try:
+    from .local_settings import *
+except ImportError:
+    pass
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,7 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api',               # Django環境構築時に作成したアプリケーションフォルダ名を追加
-    'rest_framework'   # Django REST frameworkをアクティブ化するために追加
+    'rest_framework',  # Django REST frameworkをアクティブ化するために追加
+    'graphene_django'
 ]
 
 MIDDLEWARE = [
@@ -75,10 +84,20 @@ WSGI_APPLICATION = 'isl.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': database_name,
+        'USER': user_name,
+        'PASSWORD': password,
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
 
@@ -123,3 +142,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+GRAPHENE = {
+    'SCHEMA': 'isl.schema.schema',
+}
